@@ -10,8 +10,12 @@ sys.tracebacklimit = 0
 transactionsData = pd.DataFrame()
 
 def getPointsBalance(spendPoints):
-	#Sorting the data by timestamp, so that we use the oldest issued points first.
-	transactionsData.sort_values("timestamp", axis=0, ascending=True,inplace=True, na_position='first')
+	try:
+		transactionsData.sort_values("timestamp", axis=0, ascending=True,inplace=True, na_position='first')
+	except KeyError as keyError:
+		print(keyError.args)
+		print("Timestamp column is not present in the csv file. Please ensure the csv file contains valid data")
+		sys.exit(1)
 
 	for index, row in transactionsData.iterrows():
 		if(spendPoints > row.points) :
@@ -21,6 +25,7 @@ def getPointsBalance(spendPoints):
 		else:
 			transactionsData.at[index, 'points']  = transactionsData.at[index, 'points'] - spendPoints
 			break
+
 	#After the payers have given the points to the user, we want to find the balance points for each payer
 	pointBalancesData = transactionsData.groupby(['payer'])['points'].sum()
 
@@ -29,29 +34,31 @@ def getPointsBalance(spendPoints):
 	print(jsonObject)      	
 
 def main():
-	#Checking that all input is valid.
-	try:
-	        transactionsData = pd.read_csv("transactions.csv");
-	except pd.errors.EmptyDataError as emptyDataError:
-		print(emptyDataError.args)
-		print("The csv file does not contain any data to be read. Please use another file with valid data")
-		sys.exit(1)
-	except FileNotFoundError as fileNotFoundError:
-		print(fileNotFoundError.args)
-		print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
-		sys.exit(1)
 
-	points = 0
-	try:
-		points = int(sys.argv[1])
-	except IndexError as indexError:
-		print(indexError.args)
-		print("Input value for points has not been provided. Please provided a non-negative value of points which the customer can spend")
-		sys.exit(1)
-	if(points < 0):
-		raise ValueError("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
-		sys.exit(1)
+        #Checking that all input is valid.
+        try:
+                global transactionsData
+                transactionsData = pd.read_csv("transactions.csv")
+        except pd.errors.EmptyDataError as emptyDataError:
+                print(emptyDataError.args)
+                print("The csv file does not contain any data to be read. Please use another file with valid data")
+                sys.exit(1)
+        except FileNotFoundError as fileNotFoundError:
+                print(fileNotFoundError.args)
+                print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
+                sys.exit(1)
 
-	getPointsBalance(points)
+        points = 0
+        try:
+                points = int(sys.argv[1])
+        except IndexError as indexError:
+                print(indexError.args)
+                print("Input value for points has not been provided. Please provide a non-negative value of points which the customer can spend")
+                sys.exit(1)
+        if(points < 0):
+                raise ValueError("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
+                sys.exit(1)
+
+        getPointsBalance(points)
 
 main()
