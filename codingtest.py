@@ -1,4 +1,4 @@
-#To run the code, please use the command python codingtest.py <points> where "points" is a required input. 
+#To run the code, please use the command python codingtest.py <points> OR python3 codingtest.py <points> where "points" is a required input. 
 #Please ensure the "transactions.csv" file is present in the same directory as the code.
 #Please ensure the "transactions.csv" file contains valid data to get the expected output.
 

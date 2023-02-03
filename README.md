@@ -7,5 +7,5 @@ The code is written in python and takes in input from the CLI. The following exc
 * **KeyError**: If the csv file does not contain the timestamp column, the column using which the data needs to be sorted, then the program terminates after displaying an appropriate message to use a csv file containing valid data.
  
 ## Run the code
-To run the code, please use **python codingtest.py <em>points</em>**.
+To run the code, please use the command **python codingtest.py <em>points</em>** OR **python3 codingtest.py <em>points</em>**
 
