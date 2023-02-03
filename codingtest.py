@@ -37,8 +37,13 @@ def main():
 		print(fileNotFoundError.args)
 		print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
 		sys.exit(1)
-
-	points = int(sys.argv[1])
+	points = 0
+	try:
+		points = int(sys.argv[1])
+	except IndexError as indexError:
+		print(indexError.args)
+		print("Input value for points has not been provided. Please provided a non-negative value of points which the customer can spend")
+		sys.exit(1)
 	if(points < 0):
 		raise ValueError("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
 		sys.exit(1)

@@ -3,6 +3,7 @@ The code is written in python and takes in input from the CLI. The following exc
 * **FileNotFoundError**: If the required csv file is not found in the current working directory the code displays the appropriate message and exits.
 * **EmptyDataError**: If the csv file is present but does not contain any data then the code displays the appropriate message and exits.
 * **Negative Input**: If the user inputs negative value of points that the shopper can use then the code displays the appropriate message and exits.
+* **IndexError**: If the user forgets to provide the points which they want to spend then the ode displays the appropriate message asking for a valid input and exits.
  
 ## Run the code
 To run the code, please use **python codingtest.py <em>points</em>**.
