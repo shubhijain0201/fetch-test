@@ -5,5 +5,5 @@ The code is written in python and takes in input from the CLI. The following exc
 * **Negative Input**: If the user inputs negative value of points that the shopper can use then the code displays the appropriate message and exits.
  
 ## Run the code
-To run the code, please use **python codingtest.py <points>**.
+To run the code, please use **python codingtest.py <em>points</em>**.
 
