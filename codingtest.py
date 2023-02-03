@@ -2,8 +2,8 @@
 #Please ensure the "transactions.csv" file is present in the same directory as the code.
 #Please ensure the "transactions.csv" file contains valid data to get the expected output.
 
-import pandas as pd
 import json
+import pandas as pd
 import sys
 
 sys.tracebacklimit = 0
@@ -40,6 +40,7 @@ def main():
 		print(fileNotFoundError.args)
 		print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
 		sys.exit(1)
+
 	points = 0
 	try:
 		points = int(sys.argv[1])
@@ -50,6 +51,7 @@ def main():
 	if(points < 0):
 		raise ValueError("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
 		sys.exit(1)
+
 	getPointsBalance(points)
 
 main()
