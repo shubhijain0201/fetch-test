@@ -1,4 +1,4 @@
-#To run the code, please use the command python codingtest.py <points>
+#To run the code, please use the command python codingtest.py <points> where "points" is a required input. 
 #Please ensure the "transactions.csv" file is present in the same directory as the code.
 #Please ensure the "transactions.csv" file contains valid data to get the expected output.
 
@@ -10,15 +10,18 @@ sys.tracebacklimit = 0
 transactionsData = pd.DataFrame()
 
 def getPointsBalance(spendPoints):
+	#Sorting the data by timestamp, so that we use the oldest issued points first.
 	transactionsData.sort_values("timestamp", axis=0, ascending=True,inplace=True, na_position='first')
 
 	for index, row in transactionsData.iterrows():
 		if(spendPoints > row.points) :
+			#If the user wants to spend more points than the payer, then the payer lets them use all the points the payer has for them.
 			spendPoints = spendPoints - row.points
 			transactionsData.at[index, 'points'] = 0
 		else:
 			transactionsData.at[index, 'points']  = transactionsData.at[index, 'points'] - spendPoints
 			break
+	#After the payers have given the points to the user, we want to find the balance points for each payer
 	pointBalancesData = transactionsData.groupby(['payer'])['points'].sum()
 
 	finalJsonData = pointBalancesData.to_dict()
@@ -26,7 +29,7 @@ def getPointsBalance(spendPoints):
 	print(jsonObject)      	
 
 def main():
-
+	#Checking that all input is valid.
 	try:
 	        transactionsData = pd.read_csv("transactions.csv");
 	except pd.errors.EmptyDataError as emptyDataError:
