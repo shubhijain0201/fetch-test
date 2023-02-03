@@ -33,9 +33,10 @@ def main():
 		print(emptyDataError.args)
 		print("The csv file does not contain any data to be read. Please use another file with valid data")
 		sys.exit(1)
-	except FileNotFoundError:
-        	print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
-        	sys.exit(1)
+	except FileNotFoundError as fileNotFoundError:
+		print(fileNotFoundError.args)
+		print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
+		sys.exit(1)
 
 	points = int(sys.argv[1])
 	if(points < 0):
