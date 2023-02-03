@@ -1,6 +1,6 @@
-#To run the code, please use python codingtest.py <points>.
-#Please ensure the transactions.csv file is present in the same directory as the code.
-#Please ensure the transactions.csv file contains valid data to get the expected output..
+#To run the code, please use the command python codingtest.py <points>
+#Please ensure the "transactions.csv" file is present in the same directory as the code.
+#Please ensure the "transactions.csv" file contains valid data to get the expected output.
 
 import pandas as pd
 import json
@@ -29,16 +29,17 @@ def main():
 
 	try:
 	        transactionsData = pd.read_csv("transactions.csv");
-	except pd.errors.EmptyDataError:
-        	print("The csv file does not contain any data to be read. Please use another file with valid data")
-        	sys.exit(1)
+	except pd.errors.EmptyDataError as emptyDataError:
+		print(emptyDataError.args)
+		print("The csv file does not contain any data to be read. Please use another file with valid data")
+		sys.exit(1)
 	except FileNotFoundError:
         	print("The csv file does not exist in the working directory. Please use a valid file with the filename \"transactions.csv\" present in the current working directory.")
         	sys.exit(1)
 
 	points = int(sys.argv[1])
 	if(points < 0):
-		raise Exception("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
+		raise ValueError("Cannot spend negative amount of points. The points to be spent by the user must be positive or 0")
 		sys.exit(1)
 	getPointsBalance(points)
 
